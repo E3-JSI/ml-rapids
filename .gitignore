@@ -1,0 +1,8 @@
+*.arff
+*.cxx
+debug/
+Debug/
+release/
+Release/
+.vs/
+.vscode/

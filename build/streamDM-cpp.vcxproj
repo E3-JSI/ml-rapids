@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\code\src\core\Attribute.cpp" />
+    <ClCompile Include="..\code\src\core\DenseInstance.cpp" />
+    <ClCompile Include="..\code\src\core\DiscreteEstimator.cpp" />
+    <ClCompile Include="..\code\src\core\DoubleVector.cpp" />
+    <ClCompile Include="..\code\src\core\GaussianEstimator.cpp" />
+    <ClCompile Include="..\code\src\core\Instance.cpp" />
+    <ClCompile Include="..\code\src\core\InstanceInformation.cpp" />
+    <ClCompile Include="..\code\src\core\SparseEstimator.cpp" />
+    <ClCompile Include="..\code\src\core\SparseInstance.cpp" />
+    <ClCompile Include="..\code\src\core\SplitCriterion.cpp" />
+    <ClCompile Include="..\code\src\evaluation\BasicClassificationEvaluator.cpp" />
+    <ClCompile Include="..\code\src\evaluation\Evaluator.cpp" />
+    <ClCompile Include="..\code\src\evaluation\Measures.cpp" />
+    <ClCompile Include="..\code\src\evaluation\NullEvaluator.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Bayes\Naivebayes.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Bayes\NaiveBayesStatistics.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Bayes\observer\NominalAttributeClassObserver.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Bayes\observer\NumericAttributeClassObserver.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Bayes\SimpleNaiveBayesStatistics.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Functions\Logisticregression.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Functions\Majorityclass.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Functions\Perceptron.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Meta\Bagging.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Trees\ADWIN.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Trees\AttributeSplitSuggestion.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Trees\HATNode.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Trees\HoeffdingAdaptiveTree.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Trees\HoeffdingTree.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Trees\HTAttributeClassObserver.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Trees\HTNode.cpp" />
+    <ClCompile Include="..\code\src\learners\Classifiers\Trees\InstanceConditionalTest.cpp" />
+    <ClCompile Include="..\code\src\learners\Learner.cpp" />
+    <ClCompile Include="..\code\src\streams\ArffReader.cpp" />
+    <ClCompile Include="..\code\src\streams\AsciiReader.cpp" />
+    <ClCompile Include="..\code\src\streams\C45Reader.cpp" />
+    <ClCompile Include="..\code\src\streams\CSVReader.cpp" />
+    <ClCompile Include="..\code\src\streams\LibSVMReader.cpp" />
+    <ClCompile Include="..\code\src\streams\Reader.cpp" />
+    <ClCompile Include="..\code\src\tasks\EvaluateHoldOut.cpp" />
+    <ClCompile Include="..\code\src\tasks\EvaluatePrequential.cpp" />
+    <ClCompile Include="..\code\src\tasks\Task.cpp" />
+    <ClCompile Include="..\code\src\utils\CommandLineParser.cpp" />
+    <ClCompile Include="..\code\src\utils\Configurable.cpp" />
+    <ClCompile Include="..\code\src\utils\DynamicCreateClass.cpp" />
+    <ClCompile Include="..\code\src\utils\jsoncpp.cpp" />
+    <ClCompile Include="..\code\src\utils\LearnerModel.cpp" />
+    <ClCompile Include="..\code\src\utils\Log.cpp" />
+    <ClCompile Include="..\code\src\utils\RTTI.cpp" />
+    <ClCompile Include="..\code\src\utils\Utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\code\src\API.h" />
+    <ClInclude Include="..\code\src\Common.h" />
+    <ClInclude Include="..\code\src\core\Attribute.h" />
+    <ClInclude Include="..\code\src\core\DenseInstance.h" />
+    <ClInclude Include="..\code\src\core\DiscreteEstimator.h" />
+    <ClInclude Include="..\code\src\core\DoubleVector.h" />
+    <ClInclude Include="..\code\src\core\GaussianEstimator.h" />
+    <ClInclude Include="..\code\src\core\Instance.h" />
+    <ClInclude Include="..\code\src\core\InstanceInformation.h" />
+    <ClInclude Include="..\code\src\core\SparseEstimator.h" />
+    <ClInclude Include="..\code\src\core\SparseInstance.h" />
+    <ClInclude Include="..\code\src\core\SplitCriterion.h" />
+    <ClInclude Include="..\code\src\evaluation\BasicClassificationEvaluator.h" />
+    <ClInclude Include="..\code\src\evaluation\Evaluator.h" />
+    <ClInclude Include="..\code\src\evaluation\Measures.h" />
+    <ClInclude Include="..\code\src\evaluation\NullEvaluator.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Bayes\Naivebayes.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Bayes\NaiveBayesStatistics.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Bayes\observer\AttributeClassObserver.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Bayes\observer\NominalAttributeClassObserver.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Bayes\observer\NumericAttributeClassObserver.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Bayes\SimpleNaiveBayesStatistics.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Functions\Logisticregression.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Functions\Majorityclass.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Functions\Perceptron.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Meta\Bagging.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Trees\ADWIN.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Trees\AttributeSplitSuggestion.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Trees\HATNode.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Trees\HoeffdingAdaptiveTree.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Trees\HoeffdingTree.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Trees\HTAttributeClassObserver.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Trees\HTNode.h" />
+    <ClInclude Include="..\code\src\learners\Classifiers\Trees\InstanceConditionalTest.h" />
+    <ClInclude Include="..\code\src\learners\Learner.h" />
+    <ClInclude Include="..\code\src\streams\ArffReader.h" />
+    <ClInclude Include="..\code\src\streams\AsciiReader.h" />
+    <ClInclude Include="..\code\src\streams\C45Reader.h" />
+    <ClInclude Include="..\code\src\streams\CSVReader.h" />
+    <ClInclude Include="..\code\src\streams\LibSVMReader.h" />
+    <ClInclude Include="..\code\src\streams\Reader.h" />
+    <ClInclude Include="..\code\src\tasks\EvaluateHoldOut.h" />
+    <ClInclude Include="..\code\src\tasks\EvaluatePrequential.h" />
+    <ClInclude Include="..\code\src\tasks\Task.h" />
+    <ClInclude Include="..\code\src\utils\CommandLineParser.h" />
+    <ClInclude Include="..\code\src\utils\Configurable.h" />
+    <ClInclude Include="..\code\src\utils\DynamicCreateClass.h" />
+    <ClInclude Include="..\code\src\utils\json-forwards.h" />
+    <ClInclude Include="..\code\src\utils\json.h" />
+    <ClInclude Include="..\code\src\utils\LearnerModel.h" />
+    <ClInclude Include="..\code\src\utils\Log.h" />
+    <ClInclude Include="..\code\src\utils\RTTI.h" />
+    <ClInclude Include="..\code\src\utils\Utils.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{891FA95F-BF3C-4B23-9C4C-1E47243F8D1F}</ProjectGuid>
+    <RootNamespace>streamDMcpp</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <TargetName>streamdm</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <TargetName>streamdm</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IntDir>$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <TargetName>streamdm</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IntDir>$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <TargetName>streamdm</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>JSON_DLL_BUILD;STREAMDM_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>JSON_DLL_BUILD;STREAMDM_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>JSON_DLL_BUILD;STREAMDM_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>JSON_DLL_BUILD;STREAMDM_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

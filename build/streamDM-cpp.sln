@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "streamDM-cpp", "streamDM-cpp.vcxproj", "{891FA95F-BF3C-4B23-9C4C-1E47243F8D1F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test.vcxproj", "{7BB95AAA-0132-470F-B800-D7E7FCB4A406}"
+	ProjectSection(ProjectDependencies) = postProject
+		{891FA95F-BF3C-4B23-9C4C-1E47243F8D1F} = {891FA95F-BF3C-4B23-9C4C-1E47243F8D1F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "streamDM-py", "streamDM-py.vcxproj", "{DFA49894-A3AC-4E84-9B8E-C2DE60581C72}"
+	ProjectSection(ProjectDependencies) = postProject
+		{891FA95F-BF3C-4B23-9C4C-1E47243F8D1F} = {891FA95F-BF3C-4B23-9C4C-1E47243F8D1F}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{891FA95F-BF3C-4B23-9C4C-1E47243F8D1F}.Debug|x64.ActiveCfg = Debug|x64
+		{891FA95F-BF3C-4B23-9C4C-1E47243F8D1F}.Debug|x64.Build.0 = Debug|x64
+		{891FA95F-BF3C-4B23-9C4C-1E47243F8D1F}.Debug|x86.ActiveCfg = Debug|Win32
+		{891FA95F-BF3C-4B23-9C4C-1E47243F8D1F}.Debug|x86.Build.0 = Debug|Win32
+		{891FA95F-BF3C-4B23-9C4C-1E47243F8D1F}.Release|x64.ActiveCfg = Release|x64
+		{891FA95F-BF3C-4B23-9C4C-1E47243F8D1F}.Release|x64.Build.0 = Release|x64
+		{891FA95F-BF3C-4B23-9C4C-1E47243F8D1F}.Release|x86.ActiveCfg = Release|Win32
+		{891FA95F-BF3C-4B23-9C4C-1E47243F8D1F}.Release|x86.Build.0 = Release|Win32
+		{7BB95AAA-0132-470F-B800-D7E7FCB4A406}.Debug|x64.ActiveCfg = Debug|x64
+		{7BB95AAA-0132-470F-B800-D7E7FCB4A406}.Debug|x64.Build.0 = Debug|x64
+		{7BB95AAA-0132-470F-B800-D7E7FCB4A406}.Debug|x86.ActiveCfg = Debug|Win32
+		{7BB95AAA-0132-470F-B800-D7E7FCB4A406}.Debug|x86.Build.0 = Debug|Win32
+		{7BB95AAA-0132-470F-B800-D7E7FCB4A406}.Release|x64.ActiveCfg = Release|x64
+		{7BB95AAA-0132-470F-B800-D7E7FCB4A406}.Release|x64.Build.0 = Release|x64
+		{7BB95AAA-0132-470F-B800-D7E7FCB4A406}.Release|x86.ActiveCfg = Release|Win32
+		{7BB95AAA-0132-470F-B800-D7E7FCB4A406}.Release|x86.Build.0 = Release|Win32
+		{DFA49894-A3AC-4E84-9B8E-C2DE60581C72}.Debug|x64.ActiveCfg = Debug|x64
+		{DFA49894-A3AC-4E84-9B8E-C2DE60581C72}.Debug|x64.Build.0 = Debug|x64
+		{DFA49894-A3AC-4E84-9B8E-C2DE60581C72}.Debug|x86.ActiveCfg = Debug|Win32
+		{DFA49894-A3AC-4E84-9B8E-C2DE60581C72}.Debug|x86.Build.0 = Debug|Win32
+		{DFA49894-A3AC-4E84-9B8E-C2DE60581C72}.Release|x64.ActiveCfg = Release|x64
+		{DFA49894-A3AC-4E84-9B8E-C2DE60581C72}.Release|x64.Build.0 = Release|x64
+		{DFA49894-A3AC-4E84-9B8E-C2DE60581C72}.Release|x86.ActiveCfg = Release|Win32
+		{DFA49894-A3AC-4E84-9B8E-C2DE60581C72}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CB509A2E-0EF8-4AE7-9063-C4D2128337E3}
+	EndGlobalSection
+EndGlobal
