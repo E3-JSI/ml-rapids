@@ -1,4 +1,4 @@
-# ml-rapids: C++ Stream Data Mining exposed in Python and NodeJS
+# ml-rapids: Incremental learning written in C++ exposed in Python and NodeJS
 
 `ml-rapids` implements incremental learning methods in C++ and exposes them via SWIG in Python and NodeJS.
 
