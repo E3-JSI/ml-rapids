@@ -19,6 +19,8 @@ All the methods implement [`sklearn`](https://scikit-learn.org/) incremantal lea
 
 
 ## Future plans
+Streaming random forest on top of Hoeffding trees will be implemented.
+
 The library will be exposed via `pypi` and `npm` packages.
 
 Python:
