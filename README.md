@@ -1,8 +1,13 @@
-# ml-rapids: Incremental learning written in C++ exposed in Python and NodeJS
+# ml-rapids: Incremental learning written in C++ exposed in Python
 
-`ml-rapids` implements incremental learning methods in C++ and exposes them via SWIG in Python and NodeJS.
+`ml-rapids` implements incremental learning methods in C++ and exposes them via SWIG in Python. Installation can be achieved simply with `pip install ml_rapids`. You can test your installation with running Python:
+```python
+# testing ml-rapids
+import ml_rapids
+ml_rapids.test()
+```
 
-## Incremental learning methods:
+## Implemented incremental learning methods
 
 * Classification
     * Majority Class
@@ -20,20 +25,12 @@ All the methods implement [`sklearn`](https://scikit-learn.org/) incremantal lea
 
 ## Future plans
 Streaming random forest on top of Hoeffding trees will be implemented.
-
-The library will be exposed via `pypi` and `npm` packages.
-
-Python:
-
-* `pip install ml-rapids`
-
-NodeJS:
-
-* `npm install ml-rapids`
+The library will be exposed via also via `npm` packages.
 
 
 ## Development
-Development notes can be read [here](./docs/DEV.md).
+Development notes can be read [here](https://github.com/JozefStefanInstitute/ml-rapdis/docs/DEV.md).
+Python deployment nodes can be read [here](https://github.com/JozefStefanInstitute/ml-rapdis/docs/PYPI-DEPLOY.md).
 
 ## Acknowledgements
 `ml-rapids` is developed by AILab at Jozef Stefan Institute.
