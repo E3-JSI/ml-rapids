@@ -28,28 +28,38 @@ LearnerModel::LearnerModel() {
 LearnerModel::~LearnerModel() {
 }
 
-bool LearnerModel::exportToFile(const string& fileName) {
+bool LearnerModel::exportToFile(const string& fileName, const string& json) {
 	Json::Value jv;
-
 	if (!exportToJson(jv)) {
 		return false;
 	}
+    
+    if (json != "") {
+        Json::Value value;
+        stringstream ss(json);
+        ss >> value;
+        for (const string& key : value.getMemberNames()) {
+            jv[key] = value[key];
+        }
+    }
 
 	return saveJsonToFile(fileName, jv);
 }
 
-bool LearnerModel::importFromFile(const string& fileName) {
+bool LearnerModel::importFromFile(const string& fileName, string& json) {
 	if (!Utils::checkFileExist(fileName)) {
-		LOG_ERROR("File not existed. %s", fileName.c_str());
+		LOG_ERROR("File does not exist: %s", fileName.c_str());
 		return false;
 	}
 
 	Json::Value jv;
-	if (! loadJsonFromFile(fileName, jv)) {
+	if (!loadJsonFromFile(fileName, jv)) {
 		return false;
 	}
-
-	return importFromJson(jv);
+    importFromJson(jv);
+	json = jv.toStyledString();
+    
+    return true;
 }
 
 bool LearnerModel::saveJsonToFile(const string& fileName, Json::Value& jv) {

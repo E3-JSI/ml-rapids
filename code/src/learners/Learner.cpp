@@ -157,6 +157,46 @@ void Learner::setAttributes(const vector<vector<double>>& samples, const vector<
     mInstanceInformation->addClass(new Attribute(classes), 0);
 }
 
+void Learner::setAttributes(const Json::Value& attributes) {
+    if (mInstanceInformation != nullptr) {
+        return;
+    }
+
+    mInstanceInformation = new InstanceInformation();
+
+    const Json::Value inputAttributes = attributes["InputAttributes"];
+    for (int i = 0; i < inputAttributes.size(); i++) {
+        const Json::Value& attribute = inputAttributes[i];
+        if (attribute["IsNumeric"].asBool()) {
+            mInstanceInformation->addAttribute(new Attribute(), i);
+        }
+        else {
+            const Json::Value attributeValues = attribute["values"];
+            vector<string> values;
+            for (int i = 0; i < attributeValues.size(); i++) {
+                values.push_back(attributeValues[i].asString());
+            }
+            mInstanceInformation->addAttribute(new Attribute(values), i);
+        }
+    }
+
+    const Json::Value outputAttributes = attributes["OutputAttributes"];
+    for (int i = 0; i < outputAttributes.size(); i++) {
+        const Json::Value& attribute = outputAttributes[i];
+        if (attribute["IsNumeric"].asBool()) {
+            mInstanceInformation->addClass(new Attribute(), i);
+        }
+        else {
+            const Json::Value attributeValues = attribute["values"];
+            vector<string> labels;
+            for (int i = 0; i < attributeValues.size(); i++) {
+                labels.push_back(attributeValues[i].asString());
+            }
+            mInstanceInformation->addClass(new Attribute(labels), i);
+        }
+    }
+}
+
 Instance* Learner::generateInstance(const vector<double>& features, const int target) const {
     DenseInstance* instance = new DenseInstance();
     instance->setInstanceInformation(mInstanceInformation);
@@ -269,6 +309,8 @@ int Learner::predict(const vector<double>& features) {
     instance.setInstanceInformation(mInstanceInformation);
     instance.addValues(features);
 
+    vector<double> labels { -1.0 };
+    instance.addLabels(labels);
     int index = predict(instance);
 
     return stoi(instance.getOutputAttribute(0)->getValue(index));

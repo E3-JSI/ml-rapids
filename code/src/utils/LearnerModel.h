@@ -30,8 +30,8 @@ public:
 	LearnerModel();
 	virtual ~LearnerModel();
 
-	bool exportToFile(const string& fileName);
-	bool importFromFile(const string& fileName);
+	bool exportToFile(const string& fileName, const string& json = "");
+	bool importFromFile(const string& fileName, string& json);
 
 public:
 	virtual bool exportToJson(Json::Value& jv);

@@ -43,43 +43,44 @@ void LogisticRegression::doSetParams() {
 }
 
 double LogisticRegression::prediction(int actualClass, vector<double>& value, int label) {
-	double z = dotProd(actualClass,value, label);
+	double z = dotProd(value, label);
 	z += getWeightAttributes(label, numberInputAttributes);
 	double ret;
-	if (z <= 0){
-		ret = 1.0 - (1.0/ (1.0+ exp(z)));
-	}else {
-		ret = 1.0/ (1.0+ exp(-z));
+	if (z <= 0) {
+		ret = 1.0 - (1.0 / (1.0 + exp(z)));
+	} else {
+		ret = 1.0 / (1.0 + exp(-z));
 	}
 	return ret;
 }
 
-double LogisticRegression::getInstanceMultiplier(int actualClass, vector<double>& value, int classLabel){
-		double y = (int) actualClass != classLabel ? -1.0 : 1.0;
-		double wx = dotProd(actualClass,value, classLabel);
-	    double z = y * (wx + getWeightAttributes(classLabel, numberInputAttributes));
-	    double factor = y * mLearningRatio * dloss(z);
-	    return factor;
+double LogisticRegression::getInstanceMultiplier(int actualClass, vector<double>& value, int classLabel) {
+	double y = (int) actualClass != classLabel ? -1.0 : 1.0;
+	double wx = dotProd(value, classLabel);
+	double z = y * (wx + getWeightAttributes(classLabel, numberInputAttributes));
+	double factor = y * mLearningRatio * dloss(z);
+	return factor;
 }
 
-double LogisticRegression::getWeightMultiplier(const Instance& instance, int classLabel){
-	    double multiplier = 1.0 - (mLearningRatio * mLambda)/((double)instancesSeen+1);
-	    return multiplier;
+double LogisticRegression::getWeightMultiplier(const Instance& instance, int classLabel) {
+	double multiplier = 1.0 - (mLearningRatio * mLambda) / ((double)instancesSeen + 1);
+	return multiplier;
 }
-double LogisticRegression::dloss(double z){
+
+double LogisticRegression::dloss(double z) {
 	double ret;
-	if (z < 0){
-		ret = 1.0/ (1.0+ exp(z));
-	}else {
+	if (z < 0) {
+		ret = 1.0 / (1.0 + exp(z));
+	} else {
 		double t = exp(-z);
-		ret = t/ (t+1.0);	
+		ret = t / (t + 1.0);	
 	}
 	return ret;
 }
 
 void LogisticRegression::initWeightAttributes() {
 	for (int i = 0; i < numberClasses; i++) {
-		weightAttributes[i].resize(numberInputAttributes+1);
+		weightAttributes[i].resize(numberInputAttributes + 1);
 		for (int j = 0; j < numberInputAttributes+1; j++) {
 			setWeightAttributes(0, i, j);
 		}
@@ -87,13 +88,21 @@ void LogisticRegression::initWeightAttributes() {
 }
 
 bool LogisticRegression::exportToJson(Json::Value& jv) {
-	Perceptron::exportToJson(jv);
-	jv["lambda"] = mLambda;
+    if (!Perceptron::exportToJson(jv)) {
+        return false;
+    }
+
+    jv["lambda"] = mLambda;
+
 	return true;
 }
 
 bool LogisticRegression::importFromJson(const Json::Value& jv) {
-	Perceptron::importFromJson(jv);
+    if (!Perceptron::importFromJson(jv)) {
+        return false;
+    }
+
 	mLambda = jv["lambda"].asDouble();
+
 	return true;
 }

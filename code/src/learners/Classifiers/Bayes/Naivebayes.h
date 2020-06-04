@@ -35,6 +35,8 @@ public:
 
 private:
 	NaiveBayesStatistics* nbStatistics;
+    int numberClasses;
+    double* classPrediction;
 	void doSetParams();
 };
 

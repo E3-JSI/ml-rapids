@@ -44,6 +44,7 @@ public:
 
     void setAttributes(const vector<string>& featureDefs, const vector<string>& classDefs);
     void setAttributes(const int nFeatures, const int nClasses);
+    void setAttributes(const Json::Value& attributes);
     void fit(const vector<double>& features, const int target);
     void fit(const vector<vector<double>>& samples, const vector<int>& targets);
     void fitBagging(const vector<double>& features, const int target);

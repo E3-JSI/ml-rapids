@@ -19,147 +19,151 @@
 #include "Bagging.h"
 #include "../../../Common.h"
 
-REGISTER_CLASS(Bagging) ;
+REGISTER_CLASS(Bagging);
 REGISTER_COMMAND_LINE_PARAMETER(
-		Bagging,
-		"{\"type\":\"Ensemble\","
-		"\"name\":\"Bagging\","
-		"\"parameter\":{"
-		"\"-l\":\"Learner\","
-		"\"-es\":\"EnsembleSize\""
-		"}}"
-		"");
+    Bagging,
+    "{\"type\":\"Ensemble\","
+    "\"name\":\"Bagging\","
+    "\"parameter\":{"
+    "\"-l\":\"Learner\","
+    "\"-es\":\"EnsembleSize\""
+    "}}"
+    "");
 
-Bagging::Bagging():
-		numberClasses(0),
-		mEnsembleSize(0)
+Bagging::Bagging() :
+    numberClasses(0),
+    mEnsembleSize(0)
 {
-	init = false;
-	instancesSeen = 0;
 }
 
 Bagging::~Bagging() {
 }
 
 void Bagging::doSetParams() {
-	mEnsembleSize = getParam("EnsembleSize", 10);
-	Json::Value jv = getParam("Learner");
-	if (! jv.isNull()) {
-		mLearnerName = jv["Name"].asString();
-		mLearnerParams = jv.toStyledString();
-	}
+    mEnsembleSize = getParam("EnsembleSize", 10);
+    Json::Value jv = getParam("Learner");
+    if (!jv.isNull()) {
+        mLearnerName = jv["Name"].asString();
+        mLearnerParams = jv.toStyledString();
+    }
 }
 
 void Bagging::train(const Instance& instance) {
-	if (!init) {
-		init = true;
-		for (int i = 0; i < mEnsembleSize; i++) {
-			learners.push_back(newLearner());
-		}
-		instancesSeen = 0;
-		numberClasses = instance.getNumberClasses();
-	}
+    if (!init) {
+        init = true;
+        for (int i = 0; i < mEnsembleSize; i++) {
+            learners.push_back(newLearner());
+            learners[i]->setAttributes(mInstanceInformation->toJson());
+        }
+        numberClasses = instance.getNumberClasses();
+    }
 
-	for (int i = 0; i < mEnsembleSize; i++) {
-		learners[i]->trainBagging(instance);
-	}
+    for (int i = 0; i < mEnsembleSize; i++) {
+        learners[i]->trainBagging(instance);
+    }
 }
 
 bool Bagging::exportToJson(Json::Value& jv) {
-	if (!init) {
-		return false;
-	}
+    if (!init) {
+        return false;
+    }
 
-	jv["nClasses"] = numberClasses;
-	jv["ensSize"] = mEnsembleSize;
-	jv["learnerName"] = mLearnerName;
+    jv["nClasses"] = numberClasses;
+    jv["ensSize"] = mEnsembleSize;
+    jv["learnerName"] = mLearnerName;
 
-	for (int i = 0; i < mEnsembleSize; i++) {
-		Json::Value learnerjv;
-		ostringstream str;
-		learners[i]->exportToJson(learnerjv);
-		str << "learner" << i;
-		jv[str.str()] = learnerjv;
-	}
+    for (int i = 0; i < mEnsembleSize; i++) {
+        Json::Value learnerjv;
+        ostringstream str;
+        learners[i]->exportToJson(learnerjv);
+        str << "learner" << i;
+        jv[str.str()] = learnerjv;
+    }
 
-	return true;
+    jv["instanceInformation"] = mInstanceInformation->toJson();
+
+    return true;
 }
 
 bool Bagging::importFromJson(const Json::Value& jv) {
-	if (init) {
-		return false;
-	}
+    if (init) {
+        return false;
+    }
 
-	numberClasses = jv["nClasses"].asInt();
-	mEnsembleSize = jv["ensSize"].asInt();
-	mLearnerName = jv["learnerName"].asString();
+    numberClasses = jv["nClasses"].asInt();
+    mEnsembleSize = jv["ensSize"].asInt();
+    mLearnerName = jv["learnerName"].asString();
+    setAttributes(jv["instanceInformation"]);
 
-	for (int i = 0; i < mEnsembleSize; i++) {
-		ostringstream str;
-		str << "learner" << i;
-		learners.push_back(newLearner());
-		learners[i]->importFromJson(jv[str.str()]);
-	}
+    for (int i = 0; i < mEnsembleSize; i++) {
+        ostringstream str;
+        str << "learner" << i;
+        learners.push_back(newLearner());
+        learners[i]->importFromJson(jv[str.str()]);
+        learners[i]->setAttributes(mInstanceInformation->toJson());
+    }
 
-	init = true;
-	return true;
+    init = true;
+
+    return true;
 }
 
 double* Bagging::getPrediction(const Instance& instance) {
-	int numberClasses = instance.getNumberClasses();
+    int numberClasses = instance.getNumberClasses();
 
-	double* classPrediction = new double[numberClasses];
-	for (int j = 0; j < numberClasses; j++) {
-		classPrediction[j] = 0.0;
-	}
+    double* classPrediction = new double[numberClasses];
+    for (int j = 0; j < numberClasses; j++) {
+        classPrediction[j] = 0.0;
+    }
 
-	// statistics all learner's predict in map
-	ostringstream strLog;
+    // statistics all learner's predict in map
+    ostringstream strLog;
 
-	std::map<int, int> mapClassID2Count;
-	for (int i = 0; i < mEnsembleSize; i++) {
-		int predict =  learners[i]->predict(instance);
+    std::map<int, int> mapClassID2Count;
+    for (int i = 0; i < mEnsembleSize; i++) {
+        int predict = learners[i]->predict(instance);
 
-		auto itr = mapClassID2Count.find(predict);
-		if (itr == mapClassID2Count.end()) {
-			mapClassID2Count[predict] = 1;
-		}
-		else {
-			itr->second += 1;
-		}
-	}
+        auto itr = mapClassID2Count.find(predict);
+        if (itr == mapClassID2Count.end()) {
+            mapClassID2Count[predict] = 1;
+        }
+        else {
+            itr->second += 1;
+        }
+    }
 
-	// get the real predict with the biggest count of all prediction
-	int index = 0;
-	int maxCount = 0;
-	for (auto it : mapClassID2Count) {
-		if (maxCount < it.second) {
-			maxCount = it.second;
-			index = it.first;
-		}
-	}
+    // get the real predict with the biggest count of all prediction
+    int index = 0;
+    int maxCount = 0;
+    for (auto it : mapClassID2Count) {
+        if (maxCount < it.second) {
+            maxCount = it.second;
+            index = it.first;
+        }
+    }
 
-	classPrediction[index] = 1.0;
+    classPrediction[index] = 1.0;
 
-	return classPrediction;
+    return classPrediction;
 }
 
 string Bagging::getEnsemblePrediction(const Instance& instance) {
-	// value+1 is used for online_cm which is not support value 0
-	ostringstream strPred;
-	strPred << learners[0]->predict(instance)+1;
+    // value+1 is used for online_cm which is not support value 0
+    ostringstream strPred;
+    strPred << learners[0]->predict(instance) + 1;
 
-	for (int i = 1; i < mEnsembleSize; i++) {
-		strPred << "," << learners[i]->predict(instance)+1;
-	}
+    for (int i = 1; i < mEnsembleSize; i++) {
+        strPred << "," << learners[i]->predict(instance) + 1;
+    }
 
-	return strPred.str();
+    return strPred.str();
 }
 
 Learner* Bagging::newLearner() {
-	Learner* learner = (Learner*)CREATE_CLASS(mLearnerName) ;
-	if (mLearnerParams != "") {
-		learner->setParams(mLearnerParams);
-	}
-	return learner;
+    Learner* learner = (Learner*)CREATE_CLASS(mLearnerName);
+
+    if (mLearnerParams != "") {
+        learner->setParams(mLearnerParams);
+    }
+    return learner;
 }

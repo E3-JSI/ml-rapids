@@ -1,4 +1,5 @@
 %module streamdm
+%rename (fn) file_name;
 
 %{
     #define SWIG_FILE_WITH_INIT
@@ -22,18 +23,55 @@
 %apply (int* ARGOUT_ARRAY1, int DIM1) {(int* predictions, int nPredictions)};
 
 %pythoncode %{
+import json
 import numpy as np
+
+def convertType(obj):
+    if isinstance(obj, np.integer):
+        return int(obj)
+    elif isinstance(obj, np.floating):
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    else:
+        return obj
+
+def capitalizeKeys(kwargs):
+    args = {}
+    for k, v in kwargs.items():
+        key = ''.join([s.capitalize() for s in k.split('_')])
+        args[key] = capitalizeKeys(v) if isinstance(v, dict) else v
+    return args
 %}
 
 // Rewrite methods
+%extend LearnerWrapper {
+    %pythoncode %{
+        SWIG__init__ = __init__
+        def __init__(self, *args, **kwargs):
+            self.label_map = {}
+            self.label_map_inv = {}
+            # Pass all keyword arguments as JSON encoded positional argument.
+            # Argument validation should be implemented on the C++ side.
+            args = (json.dumps(capitalizeKeys(kwargs)),)
+            self.SWIG__init__(*args)
+    %}
+};
+
+%feature("shadow") set_params %{
+def set_params(self, **kwargs):
+    params = json.dumps(capitalizeKeys(kwargs))
+    return $action(self, params)
+%}
+
 %feature("shadow") fit(double*, int, int, int*, int) %{
 def fit(self, samples, targets):
     indexed_targets = []
     for target in targets:
         if (target not in self.label_map):
             map_len = len(self.label_map)
-            self.label_map[target] = map_len
-            self.label_map_inv[map_len] = target
+            self.label_map[convertType(target)] = map_len
+            self.label_map_inv[map_len] = convertType(target)
         indexed_targets.append(self.label_map[target])
     return $action(self, samples, indexed_targets)
 %}
@@ -45,9 +83,23 @@ def predict(self, samples):
     return np.array([self.label_map_inv[p] for p in predictions])
 %}
 
-%feature("pythonprepend") LearnerWrapper() %{
-    self.label_map = {}
-    self.label_map_inv = {}
+%feature("shadow") export_json %{
+    def export_json(self, file_name):
+        props = json.dumps({
+            'label_map': [i for i in self.label_map.items()],
+            'label_map_inv': [i for i in self.label_map_inv.items()],
+        }) 
+        return $action(self, file_name, props)
+%}
+
+%feature("shadow") import_json %{
+    def import_json(self, file_name):
+        props_json = $action(self, file_name)
+        if (props_json):
+            props = json.loads(props_json)
+            self.label_map = {i[0]: i[1] for i in props['label_map']}
+            self.label_map_inv = {i[0]: i[1] for i in props['label_map_inv']}
+        return props_json
 %}
 
 %include "streamdm.h"
