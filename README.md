@@ -7,6 +7,9 @@ import ml_rapids
 ml_rapids.test()
 ```
 
+Further documentation is available here:
+* [Users' Manual](https://github.com/JozefStefanInstitute/ml-rapids/blob/master/docs/MANUAL.md)
+
 ## Implemented incremental learning methods
 
 * Classification
