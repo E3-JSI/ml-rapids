@@ -14,7 +14,7 @@ def test():
             'ctor': DecisionTreeClassifier
         },
         {
-            'name': 'Hoeffding Tree (streamDM)',
+            'name': 'Hoeffding Tree (ml-rapids)',
             'ctor': HoeffdingTree
         }
     ]
