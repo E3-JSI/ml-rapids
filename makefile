@@ -12,7 +12,7 @@ src = code/src
 test = code/test
 targetfile = streamdm
 flags = -std=c++11 -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE64 -O3 -DUNIX $(debug) 
-
+# https://github.com/facebookresearch/faiss/issues/499
 # Core library
 sourcefiles_lib = \
     $(wildcard $(src)/core/*.cpp) \
@@ -59,3 +59,18 @@ lib:
 clean:
 	rm -rf $(build)
 	rm -f $(src)/$(targetfile)_wrap.cxx
+
+swigfiles:
+	mkdir -p $(build)
+	swig -c++ -python -o $(src)/$(targetfile)_wrap.cxx -outdir $(build) $(src)/$(targetfile).i
+	cp $(build)/streamdm.py ml_rapids/streamdm.py
+
+
+# REPLACE
+# # Import the low-level C/C++ module
+#  if __package__ or "." in __name__:
+#      from . import _streamdm
+#   else:
+#      import _streamdm
+# WITH
+# import  _streamdm
