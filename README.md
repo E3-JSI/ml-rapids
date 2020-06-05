@@ -33,7 +33,8 @@ The library will be exposed via also via `npm` packages.
 
 ## Development
 Development notes can be read [here](https://github.com/JozefStefanInstitute/ml-rapdis/docs/DEV.md).
-Python deployment nodes can be read [here](https://github.com/JozefStefanInstitute/ml-rapdis/docs/PYPI-DEPLOY.md).   
+
+Python deployment notes can be read [here](https://github.com/JozefStefanInstitute/ml-rapdis/docs/PYPI-DEPLOY.md).   
 
 ## Acknowledgements
 `ml-rapids` is developed by AILab at Jozef Stefan Institute.

@@ -9,20 +9,17 @@ REGISTER_COMMAND_LINE_PARAMETER(MajorityClass, "{\"type\":\"Learner\","
 		"");
 
 MajorityClass::MajorityClass() {
-	//instancesCorrectlyClassified = 0;
-	instancesSeen = 0;
-	init = false;
-	this->predArray = nullptr;
-	this->classCounts = nullptr;
-	this->predClassCount = 0;
+	predArray = nullptr;
+	classCounts = nullptr;
+	predClassCount = 0;
 }
 
 MajorityClass::~MajorityClass() {
-	if (init) {
+	if (classCounts != nullptr) {
 		delete[] classCounts;
 	}
-	if (this->predArray != nullptr) {
-		delete[] this->predArray;
+	if (predArray != nullptr) {
+		delete[] predArray;
 	}
 }
 
@@ -31,60 +28,93 @@ void MajorityClass::doSetParams() {
 }
 
 void MajorityClass::train(const Instance& instance) {
-	if (init == false) {
-		//	std::cout << "$" << instance.getNumberClasses()<< "\n";
-		classCounts = new int[instance.getNumberClasses()];
-		//	 std::cout << "Init" << "\n";
-		for (int i = 0; i < instance.getNumberClasses(); i++) {
+	if (!init) {
+		init = true;
+        predClassCount = instance.getNumberClasses();
+		classCounts = new int[predClassCount];
+        predArray = new double[predClassCount];
+		for (int i = 0; i < predClassCount; i++) {
 			classCounts[i] = 0;
 		}
-		init = true;
 	}
-	//std::cout << "Adding" << "\n";
+	
 	int label = instance.getLabel();
 	classCounts[label]++;
 }
-double* MajorityClass::getPrediction(const Instance& instance) {
-//	if (this->predArray == nullptr) {
-//		this->predClassCount = instance.getNumberClasses();
-//		this->predArray = new double[this->predClassCount];
-//	}else if (this->predClassCount != instance.getNumberClasses()){
-//		delete[] this->predArray;
-//		this->predClassCount = instance.getNumberClasses();
-//		this->predArray = new double[this->predClassCount];
-//	}
-//
-//	for (int i = 1; i < this->predClassCount; i++) {
-//		this->predArray[i] = 0.0;
-//	}
-//	int pred = 0;
-//	if (init) {
-//		double max = classCounts[0];
-//		for (int i = 1; i < this->predClassCount; i++) {
-//			//std::cout << i <<"," << max <<"," <<  classCounts[i]<< "\n";
-//			if (max < classCounts[i]) {
-//				max = classCounts[i];
-//				pred = i;
-//			}
-//		}
-//	}
-//	this->predArray[pred] = 1.0;
-//	return this->predArray;
 
-	double* result = new double[instance.getNumberClasses()];
-	for (int i = 1; i < instance.getNumberClasses(); i++) {
-		result[i] = 0.0;
+double* MajorityClass::getPrediction(const Instance& instance) {
+    if (!init) {
+        if (predArray == nullptr) {
+            predClassCount = instance.getNumberClasses();
+            predArray = new double[predClassCount];
+
+            for (int i = 1; i < predClassCount; i++) {
+                predArray[i] = 0.0;
+            }
+        }
+
+        return predArray;
+    }
+    
+	for (int i = 1; i < predClassCount; i++) {
+		predArray[i] = 0.0;
 	}
-	int pred = 0;
-	if (init) {
-		double max = classCounts[0];
-		for (int i = 1; i < instance.getNumberClasses(); i++) {
-			if (max < classCounts[i]) {
-				max = classCounts[i];
-				pred = i;
-			}
+    
+    int pred = 0;
+	double max = classCounts[0];
+	for (int i = 1; i < predClassCount; i++) {
+		if (max < classCounts[i]) {
+			max = classCounts[i];
+			pred = i;
 		}
 	}
-	result[pred] = 1.0;
-	return result;
+
+	predArray[pred] = 1.0;
+	return predArray;
+}
+
+bool MajorityClass::exportToJson(Json::Value& jv) {
+    if (!init) {
+        return false;
+    }
+
+    jv["nClasses"] = predClassCount;
+
+    for (size_t i = 0; i < predClassCount; i++) {
+        jv["classCounts"].append(classCounts[i]);
+    }
+
+    jv["instanceInformation"] = mInstanceInformation->toJson();
+
+    return true;
+}
+
+bool MajorityClass::importFromJson(const Json::Value& jv) {
+    const int nClasses = jv["nClasses"].asInt();
+
+    if (!nClasses || jv["classCounts"].size() != nClasses) {
+        return false;
+    }
+
+    predClassCount = nClasses;
+
+    if (classCounts != nullptr) {
+        delete[] classCounts;
+    }
+
+    classCounts = new int[predClassCount];
+    
+    for (unsigned int i = 0; i < predClassCount; i++) {
+        classCounts[i] = jv["classCounts"][i].asInt();
+    }
+
+    setAttributes(jv["instanceInformation"]);
+
+    if (predArray == nullptr) {
+        predArray = new double[predClassCount];
+    }
+
+    init = true;
+
+    return true;
 }

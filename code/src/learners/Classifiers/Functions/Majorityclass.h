@@ -10,6 +10,9 @@ public:
 	~MajorityClass();
 	void train(const Instance&);
 	double* getPrediction(const Instance&);
+    virtual bool exportToJson(Json::Value& jv);
+    virtual bool importFromJson(const Json::Value& jv);
+
 private:
 	int* classCounts;
 	double* predArray;

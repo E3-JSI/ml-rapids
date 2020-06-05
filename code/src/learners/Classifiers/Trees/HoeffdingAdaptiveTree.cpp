@@ -30,15 +30,15 @@ REGISTER_COMMAND_LINE_PARAMETER(HoeffdingAdaptiveTree, "{\"type\":\"Learner\","
 		"\"-e\":\"MemoryEstimatePeriod\","
 		"\"-g\":\"GracePeriod\","
 		"\"-c\":\"SplitConfidence\","
-		"\"-t\":\"tieThreshold\","
-		"\"-b\":\"binarySplits\","
-		"\"-z\":\"stopMemManagement\","
-		"\"-r\":\"removePoorAtts\","
+		"\"-t\":\"TieThreshold\","
+		"\"-b\":\"BinarySplits\","
+		"\"-z\":\"StopMemManagement\","
+		"\"-r\":\"RemovePoorAtts\","
 		"\"-l\":\"LeafLearner\","
-		"\"-q\":\"nbThreshold\","
+		"\"-q\":\"NbThreshold\","
 		"\"-stp\":\"ShowTreePath\","
 		"\"-tpil\":\"TreePropertyIndexList\","
-		"\"-p\":\"noPrePrune\""
+		"\"-p\":\"NoPrePrune\""
 		"}}"
 		"");
 
@@ -151,7 +151,13 @@ bool HoeffdingAdaptiveTree::importFromJson(const Json::Value& jv) {
 }
 
 bool HoeffdingAdaptiveTree::exportToJson(Json::Value& jv) {
+    if (treeRoot == nullptr) {
+        return false;
+    }
+
 	this->toJson(jv);
+    jv["instanceInformation"] = mInstanceInformation->toJson();
+
 	return true;
 }
 

@@ -36,7 +36,7 @@ REGISTER_COMMAND_LINE_PARAMETER(HoeffdingTree, "{\"type\":\"Learner\","
 		"\"-z\":\"StopMemManagement\","
 		"\"-r\":\"RemovePoorAtts\","
 		"\"-l\":\"LeafLearner\","
-		"\"-q\":\"BbThreshold\","
+		"\"-q\":\"NbThreshold\","
 		"\"-stp\":\"ShowTreePath\","
 		"\"-tpil\":\"TreePropertyIndexList\","
 		"\"-p\":\"NoPrePrune\""
@@ -716,7 +716,12 @@ void HoeffdingTree::toJson(Json::Value& jv) {
 	jv["growthAllowed"] = this->growthAllowed;
 	jv["trainingWeightSeenByModel"] = this->trainingWeightSeenByModel;
 
-	this->treeRoot->toJson(jv["treeRoot"]);
+    if (this->treeRoot != nullptr) {
+	    this->treeRoot->toJson(jv["treeRoot"]);
+    }
+    else {
+        jv["treeRoot"] = Json::Value();
+    }
 }
 
 bool HoeffdingTree::importFromJson(const Json::Value& jv) {
@@ -759,11 +764,19 @@ bool HoeffdingTree::importFromJson(const Json::Value& jv) {
 		this->treeRoot = new AdaLearningNode(jv["treeRoot"]);
 	}
 
+    setAttributes(jv["instanceInformation"]);
+
 	return true;
 }
 
 bool HoeffdingTree::exportToJson(Json::Value& jv) {
+    if (treeRoot == nullptr) {
+        return false;
+    }
+
 	this->toJson(jv);
+    jv["instanceInformation"] = mInstanceInformation->toJson();
+
 	return true;
 }
 

@@ -42,8 +42,8 @@ protected:
 	void multiplyWeightAttributes(double, int, int);
 	int numberClasses;
 	int numberInputAttributes;
-	virtual double prediction(int actualClass, vector<double>& value, int);
-	double dotProd(int actualClass, vector<double>& value, int);
+	virtual double prediction(vector<double>& value, int);
+	double dotProd(vector<double>& value, int);
 	virtual double getWeightMultiplier(const Instance&, int);
 	virtual double getInstanceMultiplier(int actualClass, vector<double>& value, int);
 	double mLearningRatio;
