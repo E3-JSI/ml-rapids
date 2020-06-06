@@ -1,5 +1,38 @@
 # Users Manual
 
+## HoeffdingTree
+The method implements Very Fast Decision Tree (VFDT) aka Hoeffding Tree classification algorithm based on the following publication:
+> Domingos, Pedro, and Geoff Hulten. "Mining high-speed data streams." In Proceedings of the sixth ACM SIGKDD international conference on Knowledge discovery and data mining, pp. 71-80. 2000.
+
+```python
+class ml_rapids.HoeffdingTree( \
+    max_byte_size=33554432, memory_estimate_period=1000000, grace_period=200, split_confidence=0.0000001, \
+    tie_threshold=0.05, binary_splits=False, stop_mem_management=False, remove_poor_atts=False, \
+    leaf_learner='NB', nb_threshold=0, tree_property_index_list="", no_pre_prune=False)
+```
+
+| Parameter | Default Value | Description |
+|:--------- |:------------- |:----------- |
+| `max_byte_size` | `33554432` | |
+| `memory_estimate_period` | `1000000` | |
+| `grace_period` | `200` | |
+| `split_confidence` | `0.0000001` | |
+| `tie_threshold` | `0.05` | |
+| `binary_splits` | `False` | |
+| `stop_mem_management` | `False` | |
+| `remove_poor_atts` | `False` | |
+| `leaf_learner` | `'NB'` | |
+| `nb_threshold` | `0` | |
+| `tree_property_index_list` | `''` | |
+| `no_pre_prune` | `False` | |
+
+| Method                    | Description                 |
+|:------------------------- |:--------------------------- |
+| `fit(self, X, y)`         | Fits the model to the input data where `X` is a vector of feature vectors and `y` is a vector of targets. |
+| `partial_fit(self, X, y)` | Not implemented. |
+| `predict(self, X)`        | Predicts target values from a list of input feature vectors `X`. |
+| `export_json(self)`       | Exports current model in JSON. |
+
 ## Example that tests all methods
 
 ```python
