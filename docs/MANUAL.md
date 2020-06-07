@@ -13,18 +13,18 @@ class ml_rapids.HoeffdingTree( \
 
 | Parameter | Default Value | Description |
 |:--------- |:------------- |:----------- |
-| `max_byte_size` | `33554432` | |
-| `memory_estimate_period` | `1000000` | |
-| `grace_period` | `200` | |
-| `split_confidence` | `0.0000001` | |
-| `tie_threshold` | `0.05` | |
-| `binary_splits` | `False` | |
-| `stop_mem_management` | `False` | |
-| `remove_poor_atts` | `False` | |
-| `leaf_learner` | `'NB'` | |
-| `nb_threshold` | `0` | |
-| `tree_property_index_list` | `''` | |
-| `no_pre_prune` | `False` | |
+| `max_byte_size` | `33554432` | Maximum memory consumed by the tree. |
+| `memory_estimate_period` | `1000000` | How many instances between memory consumption checks. |
+| `grace_period` | `200` | The number of instances a leaf should observe between split attempts. |
+| `split_confidence` | `0.0000001` | The allowable error in split decision, values closer to 0 will take longer to decide. |
+| `tie_threshold` | `0.05` | Threshold below which a split will be forced to break ties. |
+| `binary_splits` | `False` | Only allow binary splits. |
+| `stop_mem_management` | `False` | Stop growing as soon as memory limit is hit. |
+| `remove_poor_atts` | `False` | Disable poor attributes. |
+| `leaf_learner` | `'NB'` | Leaf prediction to use. Possible options are `{ 'MC': 'Majority Class', 'NB': 'Naive Bayes', 'NBAdaptive': 'Naiva Bayes Adaptive' }` |
+| `nb_threshold` | `0` | The number of instances a leaf should observe before permitting Naive Bayes. |
+| `tree_property_index_list` | `''` | NA. |
+| `no_pre_prune` | `False` | Disable pre-pruning. |
 
 | Method                    | Description                 |
 |:------------------------- |:--------------------------- |
