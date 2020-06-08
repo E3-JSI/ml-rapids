@@ -36,7 +36,7 @@ class ml_rapids.HoeffdingTree( \
 ## Example that tests all methods
 
 ```python
-from streamdm import \
+from ml_rapids import \
     HoeffdingTree, HoeffdingAdaptiveTree, NaiveBayes, \
     LogisticRegression, MajorityClass, Perceptron, Bagging
 from sklearn.tree import DecisionTreeClassifier
