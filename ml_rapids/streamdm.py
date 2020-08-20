@@ -58,27 +58,49 @@ class _SwigNonDynamicMeta(type):
 
 
 
+import json
 import numpy as np
 
+def convertType(obj):
+    if isinstance(obj, np.integer):
+        return int(obj)
+    elif isinstance(obj, np.floating):
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    else:
+        return obj
+
+def capitalizeKeys(kwargs):
+    args = {}
+    for k, v in kwargs.items():
+        key = ''.join([s.capitalize() for s in k.split('_')])
+        args[key] = capitalizeKeys(v) if isinstance(v, dict) else v
+    return args
+
+
+def mergeParams(*args):
+    return _streamdm.mergeParams(*args)
 class HoeffdingTree(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self):
+    def __init__(self, *args):
+        _streamdm.HoeffdingTree_swiginit(self, _streamdm.new_HoeffdingTree(*args))
 
-        self.label_map = {}
-        self.label_map_inv = {}
+    def set_params(self, **kwargs):
+        params = json.dumps(capitalizeKeys(kwargs))
+        return _streamdm.HoeffdingTree_set_params(self, params)
 
 
-        _streamdm.HoeffdingTree_swiginit(self, _streamdm.new_HoeffdingTree())
 
     def fit(self, samples, targets):
         indexed_targets = []
         for target in targets:
             if (target not in self.label_map):
                 map_len = len(self.label_map)
-                self.label_map[target] = map_len
-                self.label_map_inv[map_len] = target
+                self.label_map[convertType(target)] = map_len
+                self.label_map_inv[map_len] = convertType(target)
             indexed_targets.append(self.label_map[target])
         return _streamdm.HoeffdingTree_fit(self, samples, indexed_targets)
 
@@ -92,7 +114,33 @@ class HoeffdingTree(object):
 
 
     def export_json(self, file_name):
-        return _streamdm.HoeffdingTree_export_json(self, file_name)
+        props = json.dumps({
+            'label_map': [i for i in self.label_map.items()],
+            'label_map_inv': [i for i in self.label_map_inv.items()],
+        }) 
+        return _streamdm.HoeffdingTree_export_json(self, file_name, props)
+
+
+
+    def import_json(self, file_name):
+        props_json = _streamdm.HoeffdingTree_import_json(self, file_name)
+        if (props_json):
+            props = json.loads(props_json)
+            self.label_map = {i[0]: i[1] for i in props['label_map']}
+            self.label_map_inv = {i[0]: i[1] for i in props['label_map_inv']}
+        return props_json
+
+
+
+    SWIG__init__ = __init__
+    def __init__(self, *args, **kwargs):
+        self.label_map = {}
+        self.label_map_inv = {}
+    # Pass all keyword arguments as JSON encoded positional argument.
+    # Argument validation should be implemented on the C++ side.
+        args = (json.dumps(capitalizeKeys(kwargs)),)
+        self.SWIG__init__(*args)
+
     __swig_destroy__ = _streamdm.delete_HoeffdingTree
 
 # Register HoeffdingTree in _streamdm:
@@ -102,21 +150,22 @@ class HoeffdingAdaptiveTree(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self):
+    def __init__(self, *args):
+        _streamdm.HoeffdingAdaptiveTree_swiginit(self, _streamdm.new_HoeffdingAdaptiveTree(*args))
 
-        self.label_map = {}
-        self.label_map_inv = {}
+    def set_params(self, **kwargs):
+        params = json.dumps(capitalizeKeys(kwargs))
+        return _streamdm.HoeffdingAdaptiveTree_set_params(self, params)
 
 
-        _streamdm.HoeffdingAdaptiveTree_swiginit(self, _streamdm.new_HoeffdingAdaptiveTree())
 
     def fit(self, samples, targets):
         indexed_targets = []
         for target in targets:
             if (target not in self.label_map):
                 map_len = len(self.label_map)
-                self.label_map[target] = map_len
-                self.label_map_inv[map_len] = target
+                self.label_map[convertType(target)] = map_len
+                self.label_map_inv[map_len] = convertType(target)
             indexed_targets.append(self.label_map[target])
         return _streamdm.HoeffdingAdaptiveTree_fit(self, samples, indexed_targets)
 
@@ -130,7 +179,33 @@ class HoeffdingAdaptiveTree(object):
 
 
     def export_json(self, file_name):
-        return _streamdm.HoeffdingAdaptiveTree_export_json(self, file_name)
+        props = json.dumps({
+            'label_map': [i for i in self.label_map.items()],
+            'label_map_inv': [i for i in self.label_map_inv.items()],
+        }) 
+        return _streamdm.HoeffdingAdaptiveTree_export_json(self, file_name, props)
+
+
+
+    def import_json(self, file_name):
+        props_json = _streamdm.HoeffdingAdaptiveTree_import_json(self, file_name)
+        if (props_json):
+            props = json.loads(props_json)
+            self.label_map = {i[0]: i[1] for i in props['label_map']}
+            self.label_map_inv = {i[0]: i[1] for i in props['label_map_inv']}
+        return props_json
+
+
+
+    SWIG__init__ = __init__
+    def __init__(self, *args, **kwargs):
+        self.label_map = {}
+        self.label_map_inv = {}
+    # Pass all keyword arguments as JSON encoded positional argument.
+    # Argument validation should be implemented on the C++ side.
+        args = (json.dumps(capitalizeKeys(kwargs)),)
+        self.SWIG__init__(*args)
+
     __swig_destroy__ = _streamdm.delete_HoeffdingAdaptiveTree
 
 # Register HoeffdingAdaptiveTree in _streamdm:
@@ -140,21 +215,22 @@ class NaiveBayes(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self):
+    def __init__(self, *args):
+        _streamdm.NaiveBayes_swiginit(self, _streamdm.new_NaiveBayes(*args))
 
-        self.label_map = {}
-        self.label_map_inv = {}
+    def set_params(self, **kwargs):
+        params = json.dumps(capitalizeKeys(kwargs))
+        return _streamdm.NaiveBayes_set_params(self, params)
 
 
-        _streamdm.NaiveBayes_swiginit(self, _streamdm.new_NaiveBayes())
 
     def fit(self, samples, targets):
         indexed_targets = []
         for target in targets:
             if (target not in self.label_map):
                 map_len = len(self.label_map)
-                self.label_map[target] = map_len
-                self.label_map_inv[map_len] = target
+                self.label_map[convertType(target)] = map_len
+                self.label_map_inv[map_len] = convertType(target)
             indexed_targets.append(self.label_map[target])
         return _streamdm.NaiveBayes_fit(self, samples, indexed_targets)
 
@@ -168,7 +244,33 @@ class NaiveBayes(object):
 
 
     def export_json(self, file_name):
-        return _streamdm.NaiveBayes_export_json(self, file_name)
+        props = json.dumps({
+            'label_map': [i for i in self.label_map.items()],
+            'label_map_inv': [i for i in self.label_map_inv.items()],
+        }) 
+        return _streamdm.NaiveBayes_export_json(self, file_name, props)
+
+
+
+    def import_json(self, file_name):
+        props_json = _streamdm.NaiveBayes_import_json(self, file_name)
+        if (props_json):
+            props = json.loads(props_json)
+            self.label_map = {i[0]: i[1] for i in props['label_map']}
+            self.label_map_inv = {i[0]: i[1] for i in props['label_map_inv']}
+        return props_json
+
+
+
+    SWIG__init__ = __init__
+    def __init__(self, *args, **kwargs):
+        self.label_map = {}
+        self.label_map_inv = {}
+    # Pass all keyword arguments as JSON encoded positional argument.
+    # Argument validation should be implemented on the C++ side.
+        args = (json.dumps(capitalizeKeys(kwargs)),)
+        self.SWIG__init__(*args)
+
     __swig_destroy__ = _streamdm.delete_NaiveBayes
 
 # Register NaiveBayes in _streamdm:
@@ -178,21 +280,22 @@ class LogisticRegression(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self):
+    def __init__(self, *args):
+        _streamdm.LogisticRegression_swiginit(self, _streamdm.new_LogisticRegression(*args))
 
-        self.label_map = {}
-        self.label_map_inv = {}
+    def set_params(self, **kwargs):
+        params = json.dumps(capitalizeKeys(kwargs))
+        return _streamdm.LogisticRegression_set_params(self, params)
 
 
-        _streamdm.LogisticRegression_swiginit(self, _streamdm.new_LogisticRegression())
 
     def fit(self, samples, targets):
         indexed_targets = []
         for target in targets:
             if (target not in self.label_map):
                 map_len = len(self.label_map)
-                self.label_map[target] = map_len
-                self.label_map_inv[map_len] = target
+                self.label_map[convertType(target)] = map_len
+                self.label_map_inv[map_len] = convertType(target)
             indexed_targets.append(self.label_map[target])
         return _streamdm.LogisticRegression_fit(self, samples, indexed_targets)
 
@@ -206,7 +309,33 @@ class LogisticRegression(object):
 
 
     def export_json(self, file_name):
-        return _streamdm.LogisticRegression_export_json(self, file_name)
+        props = json.dumps({
+            'label_map': [i for i in self.label_map.items()],
+            'label_map_inv': [i for i in self.label_map_inv.items()],
+        }) 
+        return _streamdm.LogisticRegression_export_json(self, file_name, props)
+
+
+
+    def import_json(self, file_name):
+        props_json = _streamdm.LogisticRegression_import_json(self, file_name)
+        if (props_json):
+            props = json.loads(props_json)
+            self.label_map = {i[0]: i[1] for i in props['label_map']}
+            self.label_map_inv = {i[0]: i[1] for i in props['label_map_inv']}
+        return props_json
+
+
+
+    SWIG__init__ = __init__
+    def __init__(self, *args, **kwargs):
+        self.label_map = {}
+        self.label_map_inv = {}
+    # Pass all keyword arguments as JSON encoded positional argument.
+    # Argument validation should be implemented on the C++ side.
+        args = (json.dumps(capitalizeKeys(kwargs)),)
+        self.SWIG__init__(*args)
+
     __swig_destroy__ = _streamdm.delete_LogisticRegression
 
 # Register LogisticRegression in _streamdm:
@@ -216,21 +345,22 @@ class MajorityClass(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self):
+    def __init__(self, *args):
+        _streamdm.MajorityClass_swiginit(self, _streamdm.new_MajorityClass(*args))
 
-        self.label_map = {}
-        self.label_map_inv = {}
+    def set_params(self, **kwargs):
+        params = json.dumps(capitalizeKeys(kwargs))
+        return _streamdm.MajorityClass_set_params(self, params)
 
 
-        _streamdm.MajorityClass_swiginit(self, _streamdm.new_MajorityClass())
 
     def fit(self, samples, targets):
         indexed_targets = []
         for target in targets:
             if (target not in self.label_map):
                 map_len = len(self.label_map)
-                self.label_map[target] = map_len
-                self.label_map_inv[map_len] = target
+                self.label_map[convertType(target)] = map_len
+                self.label_map_inv[map_len] = convertType(target)
             indexed_targets.append(self.label_map[target])
         return _streamdm.MajorityClass_fit(self, samples, indexed_targets)
 
@@ -244,7 +374,33 @@ class MajorityClass(object):
 
 
     def export_json(self, file_name):
-        return _streamdm.MajorityClass_export_json(self, file_name)
+        props = json.dumps({
+            'label_map': [i for i in self.label_map.items()],
+            'label_map_inv': [i for i in self.label_map_inv.items()],
+        }) 
+        return _streamdm.MajorityClass_export_json(self, file_name, props)
+
+
+
+    def import_json(self, file_name):
+        props_json = _streamdm.MajorityClass_import_json(self, file_name)
+        if (props_json):
+            props = json.loads(props_json)
+            self.label_map = {i[0]: i[1] for i in props['label_map']}
+            self.label_map_inv = {i[0]: i[1] for i in props['label_map_inv']}
+        return props_json
+
+
+
+    SWIG__init__ = __init__
+    def __init__(self, *args, **kwargs):
+        self.label_map = {}
+        self.label_map_inv = {}
+    # Pass all keyword arguments as JSON encoded positional argument.
+    # Argument validation should be implemented on the C++ side.
+        args = (json.dumps(capitalizeKeys(kwargs)),)
+        self.SWIG__init__(*args)
+
     __swig_destroy__ = _streamdm.delete_MajorityClass
 
 # Register MajorityClass in _streamdm:
@@ -254,21 +410,22 @@ class Perceptron(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self):
+    def __init__(self, *args):
+        _streamdm.Perceptron_swiginit(self, _streamdm.new_Perceptron(*args))
 
-        self.label_map = {}
-        self.label_map_inv = {}
+    def set_params(self, **kwargs):
+        params = json.dumps(capitalizeKeys(kwargs))
+        return _streamdm.Perceptron_set_params(self, params)
 
 
-        _streamdm.Perceptron_swiginit(self, _streamdm.new_Perceptron())
 
     def fit(self, samples, targets):
         indexed_targets = []
         for target in targets:
             if (target not in self.label_map):
                 map_len = len(self.label_map)
-                self.label_map[target] = map_len
-                self.label_map_inv[map_len] = target
+                self.label_map[convertType(target)] = map_len
+                self.label_map_inv[map_len] = convertType(target)
             indexed_targets.append(self.label_map[target])
         return _streamdm.Perceptron_fit(self, samples, indexed_targets)
 
@@ -282,7 +439,33 @@ class Perceptron(object):
 
 
     def export_json(self, file_name):
-        return _streamdm.Perceptron_export_json(self, file_name)
+        props = json.dumps({
+            'label_map': [i for i in self.label_map.items()],
+            'label_map_inv': [i for i in self.label_map_inv.items()],
+        }) 
+        return _streamdm.Perceptron_export_json(self, file_name, props)
+
+
+
+    def import_json(self, file_name):
+        props_json = _streamdm.Perceptron_import_json(self, file_name)
+        if (props_json):
+            props = json.loads(props_json)
+            self.label_map = {i[0]: i[1] for i in props['label_map']}
+            self.label_map_inv = {i[0]: i[1] for i in props['label_map_inv']}
+        return props_json
+
+
+
+    SWIG__init__ = __init__
+    def __init__(self, *args, **kwargs):
+        self.label_map = {}
+        self.label_map_inv = {}
+    # Pass all keyword arguments as JSON encoded positional argument.
+    # Argument validation should be implemented on the C++ side.
+        args = (json.dumps(capitalizeKeys(kwargs)),)
+        self.SWIG__init__(*args)
+
     __swig_destroy__ = _streamdm.delete_Perceptron
 
 # Register Perceptron in _streamdm:
@@ -292,21 +475,22 @@ class Bagging(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self):
+    def __init__(self, *args):
+        _streamdm.Bagging_swiginit(self, _streamdm.new_Bagging(*args))
 
-        self.label_map = {}
-        self.label_map_inv = {}
+    def set_params(self, **kwargs):
+        params = json.dumps(capitalizeKeys(kwargs))
+        return _streamdm.Bagging_set_params(self, params)
 
 
-        _streamdm.Bagging_swiginit(self, _streamdm.new_Bagging())
 
     def fit(self, samples, targets):
         indexed_targets = []
         for target in targets:
             if (target not in self.label_map):
                 map_len = len(self.label_map)
-                self.label_map[target] = map_len
-                self.label_map_inv[map_len] = target
+                self.label_map[convertType(target)] = map_len
+                self.label_map_inv[map_len] = convertType(target)
             indexed_targets.append(self.label_map[target])
         return _streamdm.Bagging_fit(self, samples, indexed_targets)
 
@@ -320,7 +504,33 @@ class Bagging(object):
 
 
     def export_json(self, file_name):
-        return _streamdm.Bagging_export_json(self, file_name)
+        props = json.dumps({
+            'label_map': [i for i in self.label_map.items()],
+            'label_map_inv': [i for i in self.label_map_inv.items()],
+        }) 
+        return _streamdm.Bagging_export_json(self, file_name, props)
+
+
+
+    def import_json(self, file_name):
+        props_json = _streamdm.Bagging_import_json(self, file_name)
+        if (props_json):
+            props = json.loads(props_json)
+            self.label_map = {i[0]: i[1] for i in props['label_map']}
+            self.label_map_inv = {i[0]: i[1] for i in props['label_map_inv']}
+        return props_json
+
+
+
+    SWIG__init__ = __init__
+    def __init__(self, *args, **kwargs):
+        self.label_map = {}
+        self.label_map_inv = {}
+    # Pass all keyword arguments as JSON encoded positional argument.
+    # Argument validation should be implemented on the C++ side.
+        args = (json.dumps(capitalizeKeys(kwargs)),)
+        self.SWIG__init__(*args)
+
     __swig_destroy__ = _streamdm.delete_Bagging
 
 # Register Bagging in _streamdm:
