@@ -41,7 +41,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='ml-rapids',  # Replace with your own username
-    version='0.0.1.6',
+    version='0.0.1.7',
     author='Klemen Kenda',
     author_email='klemen.kenda@ijs.si',
     description='Incremental learning written in C++ exposed in Python',
