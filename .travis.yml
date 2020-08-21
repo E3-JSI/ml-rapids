@@ -26,12 +26,13 @@ jobs:
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
 
 install:
-  - python -m pip install --upgrade pip
+  - python3 -m pip install --upgrade pip
   - python3 -m pip install cibuildwheel==1.5.5 cython
 
 script:
   # build the wheels, put them into './wheelhouse'
-  - python setup.py sdist -d wheelhouse
+  - python3 setup.py sdist -d wheelhouse
+  - python3 -m cibuildwheel --output-dir wheelhouse
 
 env:
   global:
