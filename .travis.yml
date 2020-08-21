@@ -36,7 +36,8 @@ env:
   global:
     - TWINE_USERNAME=__token__
     # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
-    - CIBW_BUILD=cp36-* cp37-* cp38-*
+    - CIBW_BUILD="cp36-* cp37-* cp38-*"
+    - CIBW_BUILD_VERBOSITY=3
 
 after_success:
   # if the release was tagged, upload them to PyPI
