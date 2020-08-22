@@ -83,14 +83,22 @@ You may build packages for multiple python versions simply by creating virtualen
 When uploading new versions, older are made redundant. If you compiled a whole bunch of wheels, but then increase the version, `pip install` will try to install the latest version, if no wheels are available (since existing wheels are now old, no wheels are available), package will be build from source on target computers. 
 
 
-# Building a new release automagically with [cibuildwheel](https://github.com/joerick/cibuildwheel) and travis
+# Building a new release automagically with [cibuildwheel](https://github.com/joerick/cibuildwheel) and Travis
+
+## Prepare Travis
+- Enable project in [Travis](https://travis-ci.org/dashboard) (you have to be admin/have sufficient permissions)
+- Add pypi token to environment variable `TWINE_PASSWORD` to Travis config (on Travis webpage). This enables automatical upload of build wheels.
+
+
+
+## Release new version
 
 Travis is configured to build any push on `release` branch automatically and push built wheels and source distribution to pypi. Already existing versions of wheels are ignored and not uploaded.
 
-Release checklist (Part 1,2 and 3 should be automated soon) (Running `make swigfiles`should generate all required files):
+Release checklist (Part 2 and 3 should be automated soon) (Running `make swigfiles` should generate all required files):
 1. Make sure you have an up to date repository state
-1. Generate fresh `.swig` file and push it to git: 
-    - Run `make` to generate fresh `streamdm_wrap.cxx` and commit it to repository.
+1. Generate fresh `.cxx` file and push it to git: 
+    - Generate fresh `streamdm_wrap.cxx` and commit it to repository.
 1. Generate fresh `ml_rapids/streamdm.py` and fix it manually:
     - Replace
         ```python
@@ -108,5 +116,5 @@ Release checklist (Part 1,2 and 3 should be automated soon) (Running `make swigf
         somewhere around line 10.
     - Commit `ml_rapids/streamdm.py`
 1. Increase version in `setup.py` (If you don't increase the version, new wheels won't get uploaded, as they already exist)
-1. Merge changes to `release` branch on main repository and push (or open pull request).
+1. Merge changes to `release` branch on main repository and push (or open pull request and confirm it).
 1. Wait for travis to build the wheels and source distribution (Full process takes up to an hour, first wheels get published a lot faster).
