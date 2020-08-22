@@ -59,3 +59,8 @@ lib:
 clean:
 	rm -rf $(build)
 	rm -f $(src)/$(targetfile)_wrap.cxx
+
+swigfiles:
+	mkdir -p $(build)
+	swig -c++ -python -o $(src)/$(targetfile)_wrap.cxx -outdir $(build) $(src)/$(targetfile).i
+	cp $(build)/streamdm.py ml_rapids/streamdm.py

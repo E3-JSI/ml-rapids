@@ -1,5 +1,9 @@
 language: python
 
+branches:
+  only:
+    - release
+
 jobs:
   include:
     # perform a linux build
