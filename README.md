@@ -1,3 +1,5 @@
+[![Downloads](https://pepy.tech/badge/ml-rapids)](https://pepy.tech/project/ml-rapids)
+
 # ml-rapids: Incremental learning written in C++ exposed in Python
 
 `ml-rapids` implements incremental learning methods in C++ and exposes them via SWIG in Python. Installation can be achieved simply with `pip install ml_rapids`. You can test your installation with running Python:
