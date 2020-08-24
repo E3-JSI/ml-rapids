@@ -1,4 +1,4 @@
-[![Downloads](https://pepy.tech/badge/ml-rapids)](https://pepy.tech/project/ml-rapids)
+[![Downloads](https://pepy.tech/badge/ml-rapids)](https://pepy.tech/project/ml-rapids) [![Build Status](https://travis-ci.org/JozefStefanInstitute/ml-rapids.svg?branch=release)](https://travis-ci.org/JozefStefanInstitute/ml-rapids)
 
 
 # ml-rapids: Incremental learning written in C++ exposed in Python
