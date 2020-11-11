@@ -44,4 +44,5 @@ Python deployment notes can be read [here](https://github.com/JozefStefanInstitu
 
 This repository is based strongly on [streamDM-cpp](https://github.com/huawei-noah/streamDM-Cpp).
 
-Project has received funding from European Union's Horizon 2020 Research and Innovation Programme under the Grant Agreement [776115](http://www.perceptivesentinel.eu/) (PerceptiveSentinel).
+This research was funded by European Union's Horizon 2020 programme project PerceptiveSentinel (Research and Innovation) grant number [776115](https://cordis.europa.eu/project/id/776115), project NAIADES (Innovation Action) grant number [820985](https://cordis.europa.eu/project/id/820985).
+
